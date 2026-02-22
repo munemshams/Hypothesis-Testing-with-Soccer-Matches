@@ -13,12 +13,17 @@ This question is motivated by long-standing observations that women’s internat
 To evaluate this scientifically, we use two independently collected datasets of match results.
 
 **Files Included**
-─ README.md
-─ hypothesis_testing_soccer.Rmd        - The full R Markdown analysis
-─ hypothesis_testing_soccer.docx       - Knitted Word file
-─ men_results.csv                      - Raw Dataset  
-─ women_results.csv                    - Raw Dataset
-─ histogram_output.png                 - Visualization generated from R
+- README.md
+
+- hypothesis_testing_soccer.Rmd        - The full R Markdown analysis
+
+- hypothesis_testing_soccer.docx       - Knitted Word file
+
+- men_results.csv                      - Raw Dataset  
+
+- women_results.csv                    - Raw Dataset
+
+- histogram_output.png                 - Visualization generated from R
 
 **Hypotheses**
 
