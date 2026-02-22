@@ -19,7 +19,7 @@ To evaluate this scientifically, we use two independently collected datasets of 
 
 - hypothesis_testing_soccer.docx       - Knitted Word file
 
-- hypothesis_Testing_Soccer.html       - Knitted HTML file
+- hypothesis_testing_soccer.html       - Knitted HTML file
 
 - men_results.csv                      - Raw Dataset  
 
