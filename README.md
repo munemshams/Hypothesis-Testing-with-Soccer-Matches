@@ -23,7 +23,7 @@ To evaluate this scientifically, we use two independently collected datasets of 
 
 - women_results.csv                    - Raw Dataset
 
-- histogram_output.png                 - Visualization generated from R
+- histogram.png                 - Visualization generated from R
 
 **Hypotheses**
 
