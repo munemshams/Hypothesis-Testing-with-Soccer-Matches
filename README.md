@@ -1,135 +1,193 @@
-**Hypothesis Testing: Do Women’s World Cup Matches Have More Goals?**
-Statistical Comparison of Goal Scoring in FIFA World Cup Matches (Post-2002)
+# Hypothesis Testing: Goal Scoring in Men's vs Women's FIFA World Cup Matches
 
-This project investigates whether more goals are scored in women’s FIFA World Cup matches compared to men’s, using official match results after 2002-01-01. The analysis was conducted in R, using exploratory visualizations and a formal hypothesis test.
+This project investigates whether women’s FIFA World Cup matches tend to produce more goals than men’s matches using official match results after January 1, 2002.
 
-The knitted report (Word document) and all generated outputs are included in this repository.
+The analysis was conducted in **R**, combining exploratory data analysis and a formal statistical hypothesis test. The goal is to determine whether the apparent scoring difference between men's and women's international soccer matches is statistically significant.
 
-**Research Question**
+All analysis outputs, including the knitted report and visualizations, are included in this repository.
 
-Are more goals scored in women’s international soccer matches than in men’s?
+---
 
-This question is motivated by long-standing observations that women’s international matches often appear higher-scoring.
-To evaluate this scientifically, we use two independently collected datasets of match results.
+# Project Overview
 
-**Files Included**
-- README.md
+International soccer fans have often observed that women's matches appear to produce higher goal totals than men's matches. This project evaluates that observation using statistical methods.
 
-- hypothesis_testing_soccer.Rmd        - The full R Markdown analysis
+The analysis compares goal totals from:
 
-- hypothesis_testing_soccer.docx       - Knitted Word file
+• Men's FIFA World Cup matches  
+• Women's FIFA World Cup matches  
 
-- hypothesis_testing_soccer.html       - Knitted HTML file
+By examining match results after **2002**, the project focuses on the modern era of international soccer.
 
-- men_results.csv                      - Raw Dataset  
+The project includes:
 
-- women_results.csv                    - Raw Dataset
+• Data cleaning and filtering  
+• Exploratory visualization of goal distributions  
+• A non-parametric statistical hypothesis test  
+• Interpretation of statistical results  
 
-- histogram.png                 - Visualization generated from R
+---
 
-**Hypotheses**
+# Research Question
 
-We assume a 10% significance level (α = 0.10).
+**Are more goals scored in women’s FIFA World Cup matches than in men’s FIFA World Cup matches?**
 
-Null Hypothesis (H₀)
+This question is evaluated using a **one-sided hypothesis test**.
 
-The mean number of goals scored in women’s World Cup matches is the same as men’s.
+---
 
-Alternative Hypothesis (Hₐ)
+# Dataset
 
-The mean number of goals scored in women’s World Cup matches is greater than men’s.
+Two datasets are used in this project.
 
-This is a one-sided test.
+| Dataset | Description |
+|-------|-------------|
+| women_results.csv | Historical results for women's international soccer matches |
+| men_results.csv | Historical results for men's international soccer matches |
 
-**Dataset Description**
+For the analysis, only matches meeting the following criteria are included:
 
-This project uses two CSV files:
+• Tournament equals **FIFA World Cup**  
+• Match date occurs after **January 1, 2002**
 
-women_results.csv	All recorded women’s international match results
+This filtering ensures a fair comparison between modern World Cup matches.
 
-men_results.csv	All recorded men’s international match results
+---
 
-Only FIFA World Cup matches after 2002-01-01 are included in the analysis. Friendlies and qualifiers are excluded.
+# Project Workflow
 
-**Methods**
+The analysis follows a structured **statistical analysis workflow**.
 
-1️. Data Cleaning & Filtering
+## 1. Data Loading
 
-For both men and women:
+The datasets are loaded into R using the **tidyverse** ecosystem.
 
-Keep matches where tournament == "FIFA World Cup"
+The raw datasets contain match information such as:
 
-Keep only dates after 2002-01-01
+• Match date  
+• Home team  
+• Away team  
+• Home score  
+• Away score  
+• Tournament type  
 
-Compute a goals_scored variable as:
+---
+
+## 2. Data Cleaning and Filtering
+
+The datasets are filtered to retain only:
+
+• FIFA World Cup matches  
+• Matches played after **January 1, 2002**
+
+A new variable is created:
 
 goals_scored = home_score + away_score
 
-2️. Exploratory Data Analysis (EDA)
+This variable represents the **total number of goals scored in each match**.
 
-To assess distribution shape, histograms were generated for both men’s and women’s matches:
+---
 
-- Using ggplot2
-- Displayed side-by-side
-- Used to evaluate normality
+## 3. Exploratory Data Analysis (EDA)
 
-Result:
-Both distributions showed skewness and non-normal behavior, making traditional t-tests inappropriate.
+Histograms are generated for both men's and women's match datasets to examine the distribution of goals scored.
 
-3️. Hypothesis Test
+The visualizations are created using **ggplot2** and displayed side-by-side to compare scoring patterns.
 
-Since normality was violated for both groups, we use the:
+These plots allow a visual assessment of whether the goal distributions follow a normal pattern.
 
-Wilcoxon–Mann–Whitney U Test (Rank-Sum Test)
+The visualization generated during the analysis is named:
 
-Properties:
+histogram.png
 
-Non-parametric
+---
 
-Does not assume normality
+## 4. Distribution Assessment
 
-Suitable for independent samples
+The exploratory analysis revealed that both datasets exhibit **skewed distributions** and do not follow a normal distribution.
 
-Supports one-sided testing
+Because the assumptions required for a traditional **t-test** are violated, a non-parametric test is used instead.
 
-Test performed as:
+---
 
-wilcox.test(women_wc$goals_scored,
-            men_wc$goals_scored,
-            alternative = "greater")
-            
-4️. Decision Rule
+## 5. Hypothesis Testing
 
-If:
+The analysis uses the **Wilcoxon Rank-Sum Test (Mann–Whitney U Test)**.
 
-p-value < 0.10 → Reject H₀
-p-value ≥ 0.10 → Fail to reject H₀
+This test is appropriate because it:
 
-**Visualizations**
+• Does not assume normally distributed data  
+• Works with independent samples  
+• Supports one-sided hypothesis testing  
+---
 
-Histogram Comparison of Goals Scored
+# Hypotheses
 
-This graphic helps justify the use of a non-parametric test by showing visible skewness in both datasets.
+The test uses a **10% significance level (α = 0.10)**.
 
-**Results**
+### Null Hypothesis (H₀)
 
-The final output was stored in:
+The mean number of goals scored in women's World Cup matches is **equal to** the mean number of goals scored in men's matches.
 
-result_df
+### Alternative Hypothesis (Hₐ)
 
-Containing:
+The mean number of goals scored in women's World Cup matches is **greater than** the mean number of goals scored in men's matches.
 
-Variable	Meaning
-p_val	p-value from the Wilcoxon test
-result	“reject” or “fail to reject”
+This is a **one-sided test**.
 
-Example structure:
+---
 
-      p_val        result
-1   0.0XXX   "reject" / "fail to reject"
+# Decision Rule
 
-➡ The interpretation of this result is included in the knitted report.
+If **p-value < 0.10** → Reject the null hypothesis  
+If **p-value ≥ 0.10** → Fail to reject the null hypothesis
 
+---
 
+# Results
 
+The Wilcoxon rank-sum test produced the following result.
+
+| p_value | decision |
+|--------|---------|
+| 0.0051 | reject |
+
+Because the p-value is **below the significance level of 0.10**, the null hypothesis is rejected.
+
+This suggests that **women’s FIFA World Cup matches tend to produce more goals than men’s matches** in the analyzed dataset.
+
+# Visualization
+
+The analysis includes histogram visualizations comparing the goal distributions for men's and women's matches.
+
+These plots demonstrate the skewed nature of the datasets and support the use of a **non-parametric statistical test**.
+
+---
+
+# Files Included
+
+| File | Description |
+|-----|-------------|
+| README.md | Project documentation |
+| hypothesis_testing_soccer.Rmd | Full R Markdown analysis |
+| hypothesis_testing_soccer.docx | Knitted Word report containing the full analysis |
+| hypothesis_testing_soccer.html | Knitted HTML version of the report |
+| men_results.csv | Dataset containing men's international match results |
+| women_results.csv | Dataset containing women's international match results |
+| histogram.png | Visualization comparing goal distributions |
+
+---
+
+# R Libraries Used
+
+| Library | Purpose |
+|-------|--------|
+| tidyverse | Data manipulation and cleaning |
+| dplyr | Filtering and transforming match data |
+| ggplot2 | Creating histogram visualizations |
+| readr | Reading CSV datasets |
+| lubridate | Handling date filtering |
+| gridExtra | Displaying multiple plots side-by-side |
+
+---
 
